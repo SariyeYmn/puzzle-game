@@ -1,7 +1,7 @@
 import pygame, random,time
 
 pygame.init()
-
+#oyunun genelinin ölçülerini,font familysini ve renk değerlerini belirler
 WINDOW_WIDTH = 600
 WINDOW_HEIGHT = 600
 screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
@@ -23,7 +23,7 @@ bg_rect.topleft = (0, 0)
 font_title = pygame.font.Font('CoffeCake.ttf', 64)
 font_content = pygame.font.Font('CoffeCake.ttf', 40)
 
-# start screen
+# başlangıç ekranı
 title_text = font_title.render('Puzzle Game', True, PURPLE)
 title_rect = title_text.get_rect()
 title_rect.center = (WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2 - 80)
@@ -44,8 +44,8 @@ hard_text = font_content.render("Press 'H' - Hard (5x5)", True, BLUE)
 hard_rect = hard_text.get_rect()
 hard_rect.center = (WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2 + 140)
 
-# end screen
-play_again_text = font_title.render('Game Over', True, WHITE)
+# sonlandırma ekranı
+play_again_text = font_title.render('You Won', True, WHITE)
 play_again_rect = play_again_text.get_rect()
 play_again_rect.center = (WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2)
 
@@ -61,7 +61,7 @@ cell_width = None
 cell_height = None
 
 cells = []
-
+#alg kısmı
 def start_game(mode):
     global cells, cell_width, cell_height, show_start_screen
 
@@ -100,7 +100,7 @@ while running:
                 if keys[pygame.K_SPACE]:
                     is_game_over = False
                     show_start_screen = True
-
+            #level seçimine  göre algnın çalışması(level parametre olarak alınır)
             if show_start_screen:
                 keys = pygame.key.get_pressed()
                 if keys[pygame.K_e]:
@@ -121,15 +121,15 @@ while running:
             for cell in cells:
                 rect = cell['rect']
                 order = cell['order']
-
                 if rect.collidepoint(mouse_pos):
+                    #1.seçilen hücrenin kenarlarını kırmızı yapar
                     if not selected_img:
                         selected_img = cell
                         cell['border'] = RED
                     else:
                         current_img = cell
                         if current_img['order'] != selected_img['order']:
-                            #swap images
+                            #hücrelerin yerlerini değiştirir
                             temp = selected_img['pos']
                             cells[selected_img['order']]['pos'] = cells[current_img['order']]['pos']
                             cells[current_img['order']]['pos'] = temp
@@ -137,7 +137,7 @@ while running:
                             cells[selected_img['order']]['border'] = WHITE
                             selected_img = None
 
-                            # check if puzzle is solved
+                            # puzzleın çözülüp çözülmediğini kontrol eder
                             is_game_over = True
                             for cell in cells:
                                 if cell['order'] != cell['pos']:
@@ -145,6 +145,7 @@ while running:
 
 
     if show_start_screen:
+        #oyun ekranı açılımı fonksiyonları sırasıyla
         screen.fill(BLACK)
         screen.blit(title_text, title_rect)
         screen.blit(choose_text, choose_rect)
