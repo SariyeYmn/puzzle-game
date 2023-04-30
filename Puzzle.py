@@ -20,8 +20,8 @@ bg = pygame.image.load('angel.jpg')
 bg_rect = bg.get_rect()
 bg_rect.topleft = (0, 0)
 
-font_title = pygame.font.Font('Hello Avocado.ttf', 64)
-font_content = pygame.font.Font('Hello Avocado.ttf', 40)
+font_title = pygame.font.Font('CoffeCake.ttf', 64)
+font_content = pygame.font.Font('CoffeCake.ttf', 40)
 
 # start screen
 title_text = font_title.render('Puzzle Game', True, PURPLE)
